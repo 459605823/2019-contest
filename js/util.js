@@ -84,21 +84,17 @@ function isWin() { // 是否过关
 
 function isLose() {
     var boxes = document.getElementsByClassName("box")
-    var count = 0
     var len = boxes.length
     for(var i = 0; i < len; i++){
         var cur = boxes[i].id.split("_")
         var row = cur[0]
         var col = cur[1]
         if (!canMove(row, col)) {
-            count++
+            alert("失败了，再试一次吧！")
+            var level = parseInt($('.level').innerHTML.split(" ")[1])
+            initMap(gameData[level - 1])
+            $('select').value = '第' + (level) + '关'
         }
-    }
-    if (count == len) {
-        alert("失败了，再试一次吧！")
-        var level = parseInt($('.level').innerHTML.split(" ")[1])
-        initMap(gameData[level - 1])
-        $('select').value = '第' + (level) + '关'
     }
 }
 
