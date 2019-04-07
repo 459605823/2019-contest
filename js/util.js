@@ -8,6 +8,7 @@ function initMap(data) { // 初始化地图
         html += '</tr>'
     }
     $('table').innerHTML = html
+    $('.level').innerHTML = data.name
     setMapClass(data.map)
 }
 
@@ -63,20 +64,56 @@ function move(cur, next, direction) { // cur当前点 next下一点 direction代
     }
     setTimeout(function () {
         isWin()
+        isLose()
     }, 1000)
 }
 
 function isWin() { // 是否过关
     if (!$('.box')) { // 当不存在类名为box的元素时，即箱子全部到达目的地后，表示过关
-        if ($('.level span').innerHTML == '15') {
+        if ($('.level').innerHTML == '15') {
             alert('恭喜你通关全部关卡，这个游戏已经难不倒你了！')
             isWin = function () {}
         } else {
             alert('恭喜你通关了, 再接再励，攻克下一关')
-            var level = parseInt($('.level span').innerHTML)
+            var level = parseInt($('.level').innerHTML.split(" ")[1])
             initMap(gameData[level])
-            $('.level').innerHTML = 'level <span>' + (level + 1) + '</span>'
             $('select').value = '第' + (level + 1) + '关'
         }
     }
+}
+
+function isLose() {
+    var boxes = document.getElementsByClassName("box")
+    var count = 0
+    var len = boxes.length
+    for(var i = 0; i < len; i++){
+        var cur = boxes[i].id.split("_")
+        var row = cur[0]
+        var col = cur[1]
+        if (!canMove(row, col)) {
+            count++
+        }
+    }
+    if (count == len) {
+        alert("失败了，再试一次吧！")
+        var level = parseInt($('.level').innerHTML.split(" ")[1])
+        initMap(gameData[level - 1])
+        $('select').value = '第' + (level) + '关'
+    }
+}
+
+function canMove(row, col) {
+    row = parseInt(row)
+    col = parseInt(col)
+    var top = $$(row - 1 + '_' + col).className
+    var left = $$(row + '_' + (col - 1)).className
+    var right = $$(row + '_' + (col + 1)).className
+    var bottom = $$(row + 1 + '_' + col).className
+    if(top == 'wall' && (left == 'wall' || right == 'wall')) {
+        return false
+    }
+    if(bottom == 'wall' && (left == 'wall' || right == 'wall')) {
+        return false
+    }
+    return true
 }

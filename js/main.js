@@ -21,7 +21,6 @@ function main() { // 主函数
     select.onchange = function () { // 选择关卡
         var level = parseInt(this.value.substring(1, 3))
         initMap(gameData[level - 1])
-        $('.level').innerHTML = 'level <span>' + level + '</span>'
         this.blur()
     }
     $('button').onclick = function () { // 重试
