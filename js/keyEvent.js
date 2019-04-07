@@ -13,10 +13,10 @@ function keyEvent() { // 监控键盘事件
                 if (col < 0 || $$(row + '_' + col).className == 'wall') { // 左边为墙时，不能移动
                     return
                 } // 左边为箱子或左边为到达目标的箱子时，可以移动 
-                else if ($$(row + '_' + col).className == 'real' || $$(row + '_' + col).className == 'arrive') {
+                else if ($$(row + '_' + col).className == 'box' || $$(row + '_' + col).className == 'arrive') {
                     col--
                     // 超出边界、左边为墙或左边为另一个箱子时，不能移动
-                    if (col < 0 || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'real') {
+                    if (col < 0 || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'box') {
                         return
                     }
                     col++
@@ -27,9 +27,9 @@ function keyEvent() { // 监控键盘事件
                 row--
                 if (row < 0 || $$(row + '_' + col).className == 'wall') {
                     return
-                } else if ($$(row + '_' + col).className == 'real' || $$(row + '_' + col).className == 'arrive') {
+                } else if ($$(row + '_' + col).className == 'box' || $$(row + '_' + col).className == 'arrive') {
                     row--
-                    if (row < 0 || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'real') {
+                    if (row < 0 || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'box') {
                         return
                     }
                     row++
@@ -40,9 +40,9 @@ function keyEvent() { // 监控键盘事件
                 col++
                 if (col >= cols || $$(row + '_' + col).className == 'wall') {
                     return
-                } else if ($$(row + '_' + col).className == 'real' || $$(row + '_' + col).className == 'arrive') {
+                } else if ($$(row + '_' + col).className == 'box' || $$(row + '_' + col).className == 'arrive') {
                     col++
-                    if (col >= cols || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'real') {
+                    if (col >= cols || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'box') {
                         return
                     }
                     col--
@@ -53,9 +53,9 @@ function keyEvent() { // 监控键盘事件
                 row++
                 if (row >= rows || $$(row + '_' + col).className == 'wall') {
                     return
-                } else if ($$(row + '_' + col).className == 'real' || $$(row + '_' + col).className == 'arrive') {
+                } else if ($$(row + '_' + col).className == 'box' || $$(row + '_' + col).className == 'arrive') {
                     row++
-                    if (row >= rows || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'real') {
+                    if (row >= rows || $$(row + '_' + col).className == 'wall' || $$(row + '_' + col).className == 'arrive' || $$(row + '_' + col).className == 'box') {
                         return
                     }
                     row--

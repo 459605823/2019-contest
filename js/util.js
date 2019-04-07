@@ -1,3 +1,32 @@
+function initMap(data) { // 初始化地图
+    var html = ''
+    for (var i = 0; i < data.size.height; i++) {
+        html += '<tr>'
+        for (var j = 0; j < data.size.width; j++) {
+            html += '<td id=' + i + '_' + j + '></td>'
+        }
+        html += '</tr>'
+    }
+    $('table').innerHTML = html
+    setMapClass(data.map)
+}
+
+function setMapClass(data) { // 给每一个格子赋上一个类名
+    keys = {
+        05: "wall", // 墙
+        10: "ground", // 地板
+        20: "target", // 目标点
+        60: 'man', // 人
+        80: "box", // 箱子
+    }
+    data.forEach(function (arr, i) {
+        arr.forEach(function (item, j) {
+            $$(i + '_' + j).className = keys[item]
+            $$(i + '_' + j).dataset.class = keys[item]
+        })
+    })
+}
+
 function move(cur, next, direction) { // cur当前点 next下一点 direction代表移动方向
     var row = next[0]
     var col = next[1]
@@ -25,7 +54,7 @@ function move(cur, next, direction) { // cur当前点 next下一点 direction代
                 break
         }
         if ($$(row + '_' + col).className == 'ground') { // 如果箱子的下一个点为地面
-            $$(row + '_' + col).className = 'real' // 将下一个点改变为箱子
+            $$(row + '_' + col).className = 'box' // 将下一个点改变为箱子
             $$(next[0] + '_' + next[1]).className = 'man' // 箱子所在位置改变为人
         } else { // 不为地点那就为目标点
             $$(row + '_' + col).className = 'arrive' // 将下一个点改变为箱子到达
@@ -38,7 +67,7 @@ function move(cur, next, direction) { // cur当前点 next下一点 direction代
 }
 
 function isWin() { // 是否过关
-    if (!$('.real')) { // 当不存在类名为real的元素时，即箱子全部到达目的地后，表示过关
+    if (!$('.box')) { // 当不存在类名为box的元素时，即箱子全部到达目的地后，表示过关
         if ($('.level span').innerHTML == '15') {
             alert('恭喜你通关全部关卡，这个游戏已经难不倒你了！')
             isWin = function () {}
