@@ -94,6 +94,7 @@ function isLose() {
             var level = parseInt($('.level').innerHTML.split(" ")[1])
             initMap(gameData[level - 1])
             $('select').value = '第' + (level) + '关'
+            break
         }
     }
 }
